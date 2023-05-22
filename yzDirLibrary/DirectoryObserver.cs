@@ -8,6 +8,8 @@ public class DirectoryObserver : IDirectoryObserver
     private readonly string _path;
     private bool _isChanged;
 
+    public string FullPath => _path;
+
     public bool IsChanged
     {
         get => _isChanged;
@@ -59,18 +61,6 @@ public class DirectoryObserver : IDirectoryObserver
                 fileDescriber.ChangedAt = fileInfo.LastWriteTime;
             }
             _content.Add(fileDescriber);
-        }
-    }
-
-    public void Output()
-    {
-        foreach (var file in _content)
-        {
-            Console.WriteLine($"{file.ChangedAt.Date}\t " +
-                              $"{file.ChangedAt:HH:m:s}\t " +
-                              $"{file.Type}\t " +
-                              $"{file.Size}\t " +
-                              $"{file.Name}");
         }
     }
 }

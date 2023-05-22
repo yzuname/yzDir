@@ -12,6 +12,7 @@ public class DirectoryObserverOutput
 
     public void Output()
     {
+        Console.WriteLine($"Full path: { _directoryObserver.FullPath }");
         foreach (var file in _directoryObserver.Content)
         {
             Console.WriteLine($"{file.ChangedAt.Date}\t " +

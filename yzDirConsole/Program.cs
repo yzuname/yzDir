@@ -5,6 +5,8 @@ namespace yzDir;
 
 internal class Program
 {
+    private const string ExitCommand = "Exit";
+    
     private static async Task Main(string[] args)
     {
         var container = ContainerConfig.Configure();
@@ -12,13 +14,15 @@ internal class Program
         {
             while (true)
             {
+                Console.WriteLine($"Current directory is { Directory.GetCurrentDirectory() }");
                 Console.Write("Input path (for exit type 'Exit'): ");
                 var path = await Console.In.ReadLineAsync();
-                if (path == "Exit")
+                if (path == ExitCommand)
                     return;
                 try
                 {
-                    var observer = scope.Resolve<IDirectoryObserverCache>().GetDirectoryObserver(path);
+                    var fullPath = Path.GetFullPath(path);
+                    var observer = scope.Resolve<IDirectoryObserverCache>().GetDirectoryObserver(fullPath);
                     new DirectoryObserverOutput(observer).Output();
                 }
                 catch
